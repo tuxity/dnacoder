@@ -51,15 +51,15 @@ func encodeTernaryToDNA(ternaryStr string) string {
 
 // Decodes a DNA sequence (nucleotides) back to a ternary string (sequence of trits)
 func decodeDNAToTernary(dnaSeq string) (string, error) {
-	var ternaryStr strings.Builder
 	if len(dnaSeq) == 0 {
 		return "", fmt.Errorf("empty DNA sequence")
 	}
 
+	var ternaryStr strings.Builder
 	previousNucleotide := byte('A')
+
 	for i := 0; i < len(dnaSeq); i++ {
 		nextNucleotide := dnaSeq[i]
-
 		trit := reverseLookupTable[previousNucleotide][nextNucleotide]
 		ternaryStr.WriteByte(byte(trit) + '0') // Convert to ASCII character
 		previousNucleotide = nextNucleotide
@@ -70,9 +70,7 @@ func decodeDNAToTernary(dnaSeq string) (string, error) {
 
 func encode(data []byte) string {
 	ternaryStr := byteArrayToTernary([]byte(data))
-	dnaSequence := encodeTernaryToDNA(ternaryStr)
-
-	return dnaSequence
+	return  encodeTernaryToDNA(ternaryStr)
 }
 
 func decode(dnaSeq string) ([]byte, error) {
@@ -80,8 +78,5 @@ func decode(dnaSeq string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	byteArray := ternaryToByteArray(ternaryStr)
-
-	return byteArray, nil
+	return ternaryToByteArray(ternaryStr), nil
 }
