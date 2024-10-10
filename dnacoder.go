@@ -40,7 +40,7 @@ func encodeTernaryToDNA(ternaryStr string) string {
 	previousNucleotide := byte('A')
 
 	for _, tritChar := range ternaryStr {
-        trit := tritChar - '0' // Convert to integer
+		trit := tritChar - '0' // Convert to integer
 		nextNucleotide := lookupTable[previousNucleotide][trit]
 		dnaSeq.WriteByte(nextNucleotide)
 		previousNucleotide = nextNucleotide
@@ -70,7 +70,7 @@ func decodeDNAToTernary(dnaSeq string) (string, error) {
 
 func encode(data []byte) string {
 	ternaryStr := byteArrayToTernary([]byte(data))
-	return  encodeTernaryToDNA(ternaryStr)
+	return encodeTernaryToDNA(ternaryStr)
 }
 
 func decode(dnaSeq string) ([]byte, error) {
