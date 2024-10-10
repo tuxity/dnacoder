@@ -14,42 +14,50 @@ go get github.com/tuxity/dnacoder
 
 ### Encoding a string to a DNA sequence
 
-You can encode any string into a DNA sequence using `EncodeStringToDNA`.
+You can encode any string into a DNA sequence using `encode`.
 
 ```go
 package main
 
 import (
+    "io/ioutil"
+    "log"
     "fmt"
     "github.com/tuxity/dnacoder"
 )
 
 func main() {
-    data := "Hello, DNA!"
-    dnaSequence := dnacoder.EncodeStringToDNA(data)
+    fileData, err := ioutil.ReadFile("example.txt") // Read the file as binary data
+    if err != nil {
+        log.Fatal(err)
+    }
+    dnaSequence := dnacoder.encode(fileData)
     fmt.Println("Encoded DNA Sequence:", dnaSequence)
 }
 ```
 
 ### Decoding a DNA sequence back to a string
 
-You can decode a DNA sequence back into the original string using `DecodeDNAToString`.
+You can decode a DNA sequence back into the original string using `decode`.
 
 ```go
 package main
 
 import (
-    "fmt"
+    "io/ioutil"
+    "log"
     "github.com/tuxity/dnacoder"
 )
 
 func main() {
     dnaSequence := "GAGAGCACACGTATGATACATCTCTCTACGTCAGCTATATAGATCTCTGATCTGA"
-    decodedString, err := dnacoder.DecodeDNAToString(dnaSequence)
+    decodedData, err := dnacoder.decode(dnaSequence)
     if err != nil {
-        fmt.Println("Error decoding DNA sequence:", err)
-    } else {
-        fmt.Println("Decoded String:", decodedString)
+        log.Fatal(err)
+    }
+    err = ioutil.WriteFile("decoded_example.txt", decodedData, 0644)
+    if err != nil {
+        log.Fatal(err)
     }
 }
 ```

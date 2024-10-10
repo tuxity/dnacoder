@@ -68,20 +68,20 @@ func decodeDNAToTernary(dnaSeq string) (string, error) {
 	return ternaryStr.String(), nil
 }
 
-func encode(data string) string {
+func encode(data []byte) string {
 	ternaryStr := byteArrayToTernary([]byte(data))
 	dnaSequence := encodeTernaryToDNA(ternaryStr)
 
 	return dnaSequence
 }
 
-func decode(dnaSeq string) (string, error) {
+func decode(dnaSeq string) ([]byte, error) {
 	ternaryStr, err := decodeDNAToTernary(dnaSeq)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	byteArray := ternaryToByteArray(ternaryStr)
 
-	return string(byteArray), nil
+	return byteArray, nil
 }
